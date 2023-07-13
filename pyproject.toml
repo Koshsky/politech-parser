@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "politech-parser"
+version = "0.1.0"
+description = ""
+authors = ["Shmonov Matvey <meology77@gmail.com>"]
+readme = "README.md"
+packages = [{include = "politech_parser"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+isort = "^5.12.0"
+pre-commit = "^3.3.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
