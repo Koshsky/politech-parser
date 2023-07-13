@@ -9,8 +9,8 @@ import config
 
 async def main():
     async with aiohttp.ClientSession(cookies=config.cookies, headers=config.headers) as session:
-        if config.parse_directionsID:
-            asyncio.run(parse_directions(session))
+        asyncio.run(parse_directions(session))
+
         with open('directions.json', 'r', encoding='UTF-8') as file:
             directions = json.load(file)['directions']
 
