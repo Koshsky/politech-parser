@@ -3,3 +3,7 @@
 .pre-commit-config.yaml
 setup.cfg
 .mypy_cache
+id.json
+directions.json
+politech_parser/draft.py
+politech_parser/config.py
