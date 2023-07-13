@@ -30,9 +30,10 @@ async def collect_directionsID(session: aiohttp.ClientSession, search: str):
 
 async def parse_directions(session: aiohttp.ClientSession):
     tasks = []
-    for i in map(lambda x: str(x).zfill(2), range(1, 99)):
+    for i in map(lambda x: str(x).zfill(2), range(1, 67)):
         task = asyncio.create_task(collect_directionsID(session, i))
         tasks.append(task)
+    tasks.append(asyncio.create_task(collect_directionsID(session, '38.05')))  # кодов с 38 больше чем 10...
     await asyncio.gather(*tasks)
 
     with open('directions.json', 'w', encoding='UTF-8') as file:

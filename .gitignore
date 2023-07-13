@@ -7,3 +7,4 @@ id.json
 directions.json
 politech_parser/draft.py
 politech_parser/config.py
+*.zip
