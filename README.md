@@ -1,4 +1,4 @@
-https://enroll.spbstu.ru/applications-manager/api/v1/directions/all-pageable?name=09&educationFormId=2&educationLevelId=2%2C5&admissionBasis=BUDGET&showClosed=true
-
-
-https://enroll.spbstu.ru/applications-manager/api/v1/admission-list/form?applicationEducationLevel=BACHELOR&directionEducationFormId=2&directionId=730
+Парсер собирает все списки подавших заявление в СПбПУ на очное форму бюджета.
+Происходит сортировка списков по БВИ/баллам
+Так же можно посмотреть ФИО подавшего заявление (на сайте СПбПУ этого сделать нельзя)
+Все собранные данные сохраняются в папке parsed_data/. Имя файла - код направления
