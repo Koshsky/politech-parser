@@ -10,6 +10,6 @@
   pip install poetry
   $HOME/.local/bin/poetry install  - для UNIX
   %APPDATA%\Python\Scripts\poetry install  - для Windows
-4. Запустите файл main.py
+4. Запустите файл main.py из виртуального окружения poetry shell
 
-если код падает с ошибкой, замените cookies и headers в config.py на свеженькие
+  если код падает с ошибкой, обновите cookies и headers в config.py
