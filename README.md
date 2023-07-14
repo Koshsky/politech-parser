@@ -11,3 +11,5 @@
   $HOME/.local/bin/poetry install  - для UNIX
   %APPDATA%\Python\Scripts\poetry install  - для Windows
 4. Запустите файл main.py
+
+если код падает с ошибкой, замените cookies и headers в config.py на свеженькие
