@@ -45,6 +45,6 @@ if __name__ == '__main__':
     import config
 
     async def main():
-        async with aiohttp.ClientSession(headers=config.headers) as session:
+        async with aiohttp.ClientSession(headers=config.headers, cookies=config.cookies) as session:
             await parse_directions(session)
     asyncio.run(main())

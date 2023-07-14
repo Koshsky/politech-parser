@@ -2,14 +2,14 @@ import json
 
 import asyncio
 import aiohttp
+from fake_useragent import UserAgent
 
 from parse_directions import parse_directions
 from collect_data import collect_all_data
-from snils import search_snils, snils_in_list, verify_snils
-import config
+from snils import search_snils, snils_in_listy, verify_snils
 
 async def update_lists():
-    async with aiohttp.ClientSession(cookies=config.cookies, headers=config.headers) as session:
+    async with aiohttp.ClientSession(headers={'user-agent': UserAgent().random}) as session:
         await parse_directions(session)
 
         with open('directions.json', 'r', encoding='UTF-8') as file:

@@ -4,7 +4,7 @@ from pprint import pprint
 
 import aiohttp
 from aiohttp_retry import ExponentialRetry, RetryClient
-
+from fake_useragent import UserAgent
 
 SNILSES = []
 with open('directions.json', 'r', encoding='UTF-8') as file:
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     import config
 
     async def main():
-        async with aiohttp.ClientSession(headers=config.headers, cookies=config.cookies) as session:
+        async with aiohttp.ClientSession(headers={'user-agent': UserAgent().random}) as session:
 
             await collect_all_data(session)
     asyncio.run(main())
