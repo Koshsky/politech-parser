@@ -1,20 +1,13 @@
-import os
 from typing import List
 
-from dotenv import load_dotenv
+import config
 from aiogram import Bot, Dispatcher
-from aiogram.types import Message
 from aiogram.filters import Command
+from aiogram.types import Message
+from collect_data import update_lists
+from snils import format_snils_result, search_snils, verify_snils
 
-from console_parser import update_lists
-from snils import verify_snils, search_snils, snils_in_list
-
-
-load_dotenv()
-BOT_TOKEN: str = os.environ['API_TOKEN']
-admin_usernames: List[str] = os.environ['admin_id'].split('&')
-
-bot: Bot = Bot(BOT_TOKEN)
+bot: Bot = Bot(config.BOT_TOKEN)
 dp: Dispatcher = Dispatcher()
 
 
@@ -29,12 +22,12 @@ async def process_help_message(message: Message) -> None:
 
 @dp.message(Command(commands=['update']))
 async def process_update_lists(message: Message) -> None:
-    if message.from_user.username in admin_usernames:
+    if message.from_user.username in config.admin_usernames:
         try:
             await message.answer('Списки обновляются...')
             await update_lists()
         except Exception as ex:
-            await message.answer(ex)
+            await message.answer(str(ex))
         else:
             await message.answer('Списки успешно обновлены')
     else:
@@ -45,15 +38,14 @@ async def process_update_lists(message: Message) -> None:
 async def search_snils_in_lists(message: Message) -> None:
     search_res = search_snils(message.text)
     if search_res:
-        for L in search_res:
-            await message.answer(snils_in_list(message.text, L))
+        for L in sorted(search_res, key=lambda x: x['Конкурс'][message.text]['Приоритет']):
+            await message.answer(format_snils_result(message.text, L))
     else:
-        await message.answer('Среди подавших заявления в политех нет человека с таким СНИЛСом')
+        await message.answer('Среди подавших заявления в политех нет человека с таким СНИЛС')
 
 @dp.message()
 async def process_another_message(message: Message) -> None:
     await message.answer('Простите, я не понимаю Вас.\n /help')
-
 
 
 if __name__ == '__main__':
