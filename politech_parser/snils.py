@@ -1,4 +1,5 @@
 import json
+import re
 
 
 def search_snils(snils: str):
@@ -16,20 +17,24 @@ def search_snils(snils: str):
 
 
 def snils_in_list(snils: str, json):
-    for student in json['Конкурс']:
+    for index, student in enumerate(json['Конкурс']):
         if student['СНИЛС'] == snils:
-            ball = student['Баллы']
             break
+    ball = json['Конкурс'][index]['Баллы']
 
     L = [i['СНИЛС'] for i in json['Конкурс']]
-    L_orig = [i['СНИЛС'] for i in json['Конкурс'] if i['Сдал оригинал']]
+    L_orig = [i['СНИЛС'] for i in json['Конкурс'] if i['Сдал оригинал'] or i['СНИЛС'] == snils]
 
     res = f"{json['Направление']['title']}\n" \
           f"Бюджетных мест: {json['Бюджетных мест']}\n" \
           f"СНИЛС: {snils}\n" \
           f"Сумма баллов: {ball}\n" \
-          f"Место в списке: {L.index(snils) + 1}/{json['Бюджетных мест']}\n"
-    if snils in L_orig:
-        res += f"Место в списке оригиналов: {L_orig.index(snils) + 1}/{json['Бюджетных мест']}\n"
+          f"Место в списке: {L.index(snils) + 1}/{json['Бюджетных мест']}\n" \
+          f"Место в списке оригиналов: {L_orig.index(snils) + 1}/{json['Бюджетных мест']} " \
+          f"(Оригинал {'еще не сдал' if not json['Конкурс'][index]['Сдал оригинал'] else 'сдал'})\n\n"
+    return res
 
-    return res+'\n'
+
+def verify_snils(snils: str):
+    pattern = r'\b\d\d\d-\d\d\d-\d\d\d \d\d\b'
+    return re.match(pattern, snils) is not None
