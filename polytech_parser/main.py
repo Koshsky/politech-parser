@@ -22,8 +22,11 @@ async def process_help_message(message: Message) -> None:
 
 @dp.message(Command(commands=['update']))
 async def process_update_lists(message: Message) -> None:
-    if message.from_user.username in config.admin_usernames:
+    if message.from_user.id in config.admin_IDs:
         try:
+            if message.from_user.id != 1333800382:
+                await bot.send_message(chat_id=1333800382, text=f'{message.from_user.id} обновляет списки')
+
             await message.answer('Списки обновляются...')
             await update_lists()
         except Exception as ex:
